@@ -14,7 +14,7 @@ def get_user_password():
     return getpass(u'Введите пароль:')
 
 
-def get_online_friends(login, password):
+def get_online_friends_info(login, password):
     session = vk.AuthSession(
         app_id=APP_ID,
         user_login=login,
@@ -22,11 +22,11 @@ def get_online_friends(login, password):
         scope='friends',
     )
     friends_online_list_id = vk.API(session).friends.getOnline()
-    friend_online_info = vk.API(session).users.get(
+    friends_online_info = vk.API(session).users.get(
         user_ids=friends_online_list_id,
         name_case='nom',
     )
-    return friend_online_info
+    return friends_online_info
 
 
 def output_friends_to_console(friends_online_info):
@@ -38,5 +38,5 @@ def output_friends_to_console(friends_online_info):
 if __name__ == '__main__':
     login = get_user_login()
     password = get_user_password()
-    friends_online_info = get_online_friends(login, password)
+    friends_online_info = get_online_friends_info(login, password)
     output_friends_to_console(friends_online_info)
